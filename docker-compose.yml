@@ -1,0 +1,69 @@
+services:
+  mc-fabric:
+      image: itzg/minecraft-server
+      ports:
+        - 25565:25565
+      environment:
+        TYPE: "FABRIC"
+        MOTD: "Fabric Minecraft Server"
+        MEMORY: "4G"
+        EULA: "TRUE"
+        ENABLE_RCON: "true"
+        RCON_PASSWORD: ${RCON_PASSWORD}
+        RCON_PORT: 28016
+        restart: always
+      volumes:
+      - /data/minecraft-fabric:/data
+  mc-backup:
+    image: itzg/mc-backup
+    # This needs to be set because backups use hostnames
+    hostname: minecraftbackup
+    environment:
+      BACKUP_METHOD: tar
+      BACKUP_INTERVAL: "3h"
+      PRUNE_BACKUPS_DAYS: 7
+      INITIAL_DELAY: 120
+      TAR_COMPRESS_METHOD: gzip
+      ZSTD_PARAMETERS: "-3 --long=25 --single-thread"
+      SRC_DIR: "/data/minecraft-fabric/world"
+      DEST_DIR: "/data/minecraft-backups"
+      BACKUP_NAME: tableflipper-server
+      RCON_HOST: mc-fabric # change this to your Minecraft docker service name
+      RCON_PASSWORD: ${RCON_PASSWORD}
+      RCON_PORT: 28016
+    volumes:
+      - /data:/data
+  foundry-beaver:
+    image: felddy/foundryvtt:release
+    hostname: foundry_host_beaver
+    init: true
+    volumes:
+      - type: bind
+        source: /data/foundry-vtt-beaver
+        target: /data
+      - /data/SSL:/ssl
+    environment:
+      - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
+      - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
+      - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
+      - FOUNDRY_SSL_CERT=${FOUNDRY_SSL_CERT}
+      - FOUNDRY_SSL_KEY=${FOUNDRY_SSL_KEY}
+    ports:
+      - 30000:30000
+  foundry-kibin:
+    image: felddy/foundryvtt:release
+    hostname: foundry_host_kibin
+    init: true
+    volumes:
+      - type: bind
+        source: /data/foundry-vtt-kibin
+        target: /data
+      - /data/SSL:/ssl
+    environment:
+      - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_KIBIN}
+      - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_KIBIN}
+      - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD_KIBIN}
+      - FOUNDRY_SSL_CERT=${FOUNDRY_SSL_CERT}
+      - FOUNDRY_SSL_KEY=${FOUNDRY_SSL_KEY}
+    ports:
+      - 30001:30000
