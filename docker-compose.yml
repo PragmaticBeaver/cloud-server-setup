@@ -1,4 +1,5 @@
 services:
+  # Minecraft Fabric Server
   mc-fabric:
       image: itzg/minecraft-server
       ports:
@@ -14,6 +15,8 @@ services:
         restart: always
       volumes:
       - /data/minecraft-fabric:/data
+
+  # Minecraft Backup Service
   mc-backup:
     image: itzg/mc-backup
     # This needs to be set because backups use hostnames
@@ -33,6 +36,8 @@ services:
       RCON_PORT: 28016
     volumes:
       - /data:/data
+
+  # FoundryVTT services for Beaver
   foundry-beaver:
     image: felddy/foundryvtt:release
     hostname: foundry_host_beaver
@@ -50,6 +55,8 @@ services:
       - FOUNDRY_SSL_KEY=${FOUNDRY_SSL_KEY}
     ports:
       - 30000:30000
+
+  # FoundryVTT services for WarHab & Kibin
   foundry-kibin:
     image: felddy/foundryvtt:release
     hostname: foundry_host_kibin
