@@ -44,7 +44,7 @@ services:
   # Traefik
   # todo configure LetsEncrypt
   traefik:
-    image: traefik:release
+    image: traefik:v2.9
     container_name: traefik
     hostname: traefik_host
     command:
