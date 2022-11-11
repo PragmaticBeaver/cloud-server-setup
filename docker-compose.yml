@@ -82,12 +82,16 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.foundryvtt.entrypoints=http"
-      - "traefik.http.routers.foundryvtt.rule=Host(`xx.xx.xx`)"
+      - "traefik.http.routers.foundryvtt.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.middlewares.foundryvtt-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
       - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
-      - "traefik.http.routers.foundryvtt-secure.rule=Host(`xx.xx.xx`)"
+      - "traefik.http.routers.foundryvtt-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-secure.tls=true"
       - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
       - "traefik.http.routers.foundryvtt-secure.service=foundry_beaver"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.docker.network=proxy"
+networks:
+  proxy:
+    external: true
