@@ -81,20 +81,17 @@ services:
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
     ports:
       - 30000:30000
-    restart: unless-stopped
-
-  # FoundryVTT services for WarHab & Kibin
-  foundry-kibin:
-    image: felddy/foundryvtt:release
-    container_name: foundry_kibin
-    hostname: foundry_host_kibin
-    init: true
-    volumes:
-      - /data/foundry-vtt-kibin:/data
-    environment:
-      - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_KIBIN}
-      - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_KIBIN}
-      - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD_KIBIN}
-    ports:    
-      - 30001:30001
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.foundryvtt.entrypoints=http"
+      - "traefik.http.routers.foundryvtt.rule=Host(`xx.xx.xx`)"
+      - "traefik.http.middlewares.foundryvtt-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
+      - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
+      - "traefik.http.routers.foundryvtt-secure.rule=Host(`xx.xx.xx`)"
+      - "traefik.http.routers.foundryvtt-secure.tls=true"
+      - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
+      - "traefik.http.routers.foundryvtt-secure.service=foundryvtt"
+      - "traefik.http.services.foundryvtt.loadbalancer.server.port=xxxx"
+      - "traefik.docker.network=proxy"
     restart: unless-stopped
