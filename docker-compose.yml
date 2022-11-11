@@ -85,7 +85,7 @@ services:
     networks:
       - proxy
     volumes:
-      - /data/foundry-vtt-beaver:/data
+      - /home/dome/foundry-vtt-beaver:/data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
@@ -94,12 +94,10 @@ services:
       - "traefik.enable=true"
       # HTTP
       - "traefik.http.routers.foundryvtt-beaver.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
-      # - "traefik.http.routers.foundryvtt-beaver.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-beaver.entrypoints=http"
 
       # HTTPS
       - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
-      # - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-beaver-secure.entrypoints=https"
       - "traefik.http.routers.foundryvtt-beaver-secure.tls=true"
       - "traefik.http.routers.foundryvtt-beaver-secure.tls.certresolver=letsencrypt"
@@ -119,7 +117,8 @@ services:
     networks:
       - proxy
     volumes:
-      - /data/foundry-vtt-warhab:/data
+      - /home/kibin/foundry-vtt-warhab:/data
+      # - /home/warhab/foundry-vtt-warhab:/data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_WARHAB}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_WARHAB}
@@ -128,12 +127,10 @@ services:
       - "traefik.enable=true"
       # HTTP
       - "traefik.http.routers.foundryvtt-warhab.rule=Host(`foundry.warhab.pragmaticbeaver.eu`)"
-      # - "traefik.http.routers.foundryvtt-warhab.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-warhab.entrypoints=http"
 
       # HTTPS
       - "traefik.http.routers.foundryvtt-warhab-secure.rule=Host(`foundry.warhab.pragmaticbeaver.eu`)"
-      # - "traefik.http.routers.foundryvtt-warhab-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-warhab-secure.entrypoints=https"
       - "traefik.http.routers.foundryvtt-warhab-secure.tls=true"
       - "traefik.http.routers.foundryvtt-warhab-secure.tls.certresolver=letsencrypt"
