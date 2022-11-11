@@ -82,11 +82,13 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTP
-      - "traefik.http.routers.foundryvtt.rule=Host(`test.pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.foundryvtt.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt.entrypoints=http"
 
       # HTTPS
-      - "traefik.http.routers.foundryvtt-secure.rule=Host(`test.pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt-secure.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.foundryvtt-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
 
       - "traefik.http.routers.foundryvtt-secure.tls=true"
