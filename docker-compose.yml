@@ -92,6 +92,5 @@ services:
       - "traefik.http.routers.foundryvtt-secure.tls=true"
       - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
       - "traefik.http.routers.foundryvtt-secure.service=foundryvtt"
-      - "traefik.http.services.foundryvtt.loadbalancer.server.port=xxxx"
       - "traefik.docker.network=proxy"
     restart: unless-stopped
