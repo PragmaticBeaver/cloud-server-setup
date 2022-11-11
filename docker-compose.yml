@@ -62,9 +62,11 @@ services:
       - 80:80 # HTTP
       - 443:443 # HTTPS
       - 8080:8080 # Web UI
+      - 30000:30000 # FoundryVTT Beaver
+      - 30001:30001 # FoundryVTT Kibin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # let Traefik listen for Docker events
-      - /opt/docker/traefik/acme.json:/acme.json
+      - /data/traefik/acme.json:/acme.json
     restart: unless-stopped
 
   # FoundryVTT services for Beaver
