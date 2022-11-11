@@ -76,16 +76,11 @@ services:
     hostname: foundry_host_beaver
     init: true
     volumes:
-      - type: bind
-        source: /data/foundry-vtt-beaver
-        target: /data
-      - /data/SSL:/ssl
+      - /data/foundry-vtt-beaver:/data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
-      - FOUNDRY_SSL_CERT=${FOUNDRY_SSL_CERT}
-      - FOUNDRY_SSL_KEY=${FOUNDRY_SSL_KEY}
     ports:
       - 30000:30000
     restart: unless-stopped
@@ -97,16 +92,11 @@ services:
     hostname: foundry_host_kibin
     init: true
     volumes:
-      - type: bind
-        source: /data/foundry-vtt-kibin
-        target: /data
-      - /data/SSL:/ssl
+      - /data/foundry-vtt-kibin:/data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_KIBIN}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_KIBIN}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD_KIBIN}
-      - FOUNDRY_SSL_CERT=${FOUNDRY_SSL_CERT}
-      - FOUNDRY_SSL_KEY=${FOUNDRY_SSL_KEY}
     ports:
       - 30001:30000
     restart: unless-stopped
