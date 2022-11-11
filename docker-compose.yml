@@ -1,3 +1,4 @@
+version: '3.3'
 services:
   # Minecraft Fabric Server
   mc-fabric:
@@ -80,18 +81,43 @@ services:
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-      - "traefik.http.middlewares.foundryvtt-https-redirect.redirectscheme.scheme=https"
+      - "traefik.enable=true" # enable traefik
+      - "traefik.docker.network=traefik-public" # put it in the same network as traefik
+      # HTTP
+      - "traefik.http.routers.foundryvtt.rule=Host(`www.pragmaticbeaver.eu`) || Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt.entrypoints=http"
-      - "traefik.http.routers.foundryvtt.rule=Host(`pragmaticbeaver.eu`)"
-      - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
-      - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
-      - "traefik.http.routers.foundryvtt-secure.rule=Host(`pragmaticbeaver.eu`)"
-      - "traefik.http.routers.foundryvtt-secure.tls=true"
-      - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
-      - "traefik.http.routers.foundryvtt-secure.service=foundrybeaver"
-      - "traefik.docker.network=proxy"
+      # HTTP redirect
+      - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.regex=^http://(?:www.)?pragmaticbeaver.eu/(.*)"
+      - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.replacement=https://www.pragmaticbeaver.eu/$"
+      - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.permanent=true"
+      - "traefik.http.routers.foundryvtt.middlewares=def-foundryvtt-domainredirect"
+
+      # HTTPS
+      - "traefik.http.routers.foundryvtt-secured.rule=Host(`www.pragmaticbeaver.eu`) || Host(`pragmaticbeaver.eu`)" 
+      - "traefik.http.routers.foundryvtt-secured.entrypoints=https"
+      - "traefik.http.routers.foundryvtt-secured.tls=true"
+      # HTTPS redirect
+      - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.regex=^https://pragmaticbeaver.eu/(.*)"
+      - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.replacement=https://www.pragmaticbeaver.eu/$"
+      - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.permanent=true"
+      #
+      - "traefik.http.services.srv-foundryvtt-secured.loadbalancer.server.port=80" 
+      - "traefik.http.routers.foundryvtt-secured.service=srv-foundryvtt-secured"
+      #
+      - "traefik.http.routers.foundryvtt-secured.middlewares=secHeaders@file,def-compress,def-foundryvtt-secured_domainredirect"
+
+      # - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+      # - "traefik.http.middlewares.foundryvtt-https-redirect.redirectscheme.scheme=https"
+      # - "traefik.http.routers.foundryvtt.entrypoints=http"
+      # - "traefik.http.routers.foundryvtt.rule=Host(`pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
+      # - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
+      # - "traefik.http.routers.foundryvtt-secure.rule=Host(`pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt-secure.tls=true"
+      # - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
+      # - "traefik.http.routers.foundryvtt-secure.service=foundrybeaver"
+    networks:
+      - "traefik-public"
 networks:
-  proxy:
+  traefik-public:
     external: true
