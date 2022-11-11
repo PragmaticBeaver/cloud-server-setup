@@ -84,8 +84,7 @@ services:
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
     labels:
-      - "traefik.enable=true" # enable traefik
-      - "traefik.docker.network=traefik" # put it in the same network as traefik
+      - "traefik.enable=true"
       # # HTTP
       # - "traefik.http.routers.foundryvtt.rule=Host(`www.pragmaticbeaver.eu`) || Host(`pragmaticbeaver.eu`)"
       # - "traefik.http.routers.foundryvtt.entrypoints=http"
@@ -127,12 +126,3 @@ services:
       - "traefik.http.routers.foundryvtt-secure.service=foundrybeaver"
 
       - "traefik.http.services.portainer.loadbalancer.server.port=30000"
-    networks:
-      - traefik
-      - default
-networks:
-  default:
-    driver: bridge
-  traefik:
-    external:
-      name: traefik_default
