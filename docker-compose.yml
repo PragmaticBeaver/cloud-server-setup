@@ -70,7 +70,7 @@ services:
   # FoundryVTT services for Beaver
   foundry-beaver:
     image: felddy/foundryvtt:release
-    container_name: foundry_beaver
+    container_name: foundrybeaver
     init: true
     restart: unless-stopped
     volumes:
@@ -89,7 +89,7 @@ services:
       - "traefik.http.routers.foundryvtt-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-secure.tls=true"
       - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
-      - "traefik.http.routers.foundryvtt-secure.service=foundry_beaver"
+      - "traefik.http.routers.foundryvtt-secure.service=foundrybeaver"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.docker.network=proxy"
 networks:
