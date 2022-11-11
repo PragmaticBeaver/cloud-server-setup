@@ -82,29 +82,6 @@ services:
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
     labels:
       - "traefik.enable=true"
-      # # HTTP
-      # - "traefik.http.routers.foundryvtt.rule=Host(`www.pragmaticbeaver.eu`) || Host(`pragmaticbeaver.eu`)"
-      # - "traefik.http.routers.foundryvtt.entrypoints=http"
-      # # HTTP redirect
-      # - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.regex=^http://(?:www.)?pragmaticbeaver.eu/(.*)"
-      # - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.replacement=https://www.pragmaticbeaver.eu/$"
-      # - "traefik.http.middlewares.def-foundryvtt-domainredirect.redirectregex.permanent=true"
-      # - "traefik.http.routers.foundryvtt.middlewares=def-foundryvtt-domainredirect"
-
-      # # HTTPS
-      # - "traefik.http.routers.foundryvtt-secured.rule=Host(`www.pragmaticbeaver.eu`) || Host(`pragmaticbeaver.eu`)" 
-      # - "traefik.http.routers.foundryvtt-secured.entrypoints=https"
-      # - "traefik.http.routers.foundryvtt-secured.tls=true"
-      # # HTTPS redirect
-      # - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.regex=^https://pragmaticbeaver.eu/(.*)"
-      # - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.replacement=https://www.pragmaticbeaver.eu/$"
-      # - "traefik.http.middlewares.def-foundryvtt-secured_domainredirect.redirectregex.permanent=true"
-      # #
-      # - "traefik.http.services.srv-foundryvtt-secured.loadbalancer.server.port=80" 
-      # - "traefik.http.routers.foundryvtt-secured.service=srv-foundryvtt-secured"
-      # #
-      # - "traefik.http.routers.foundryvtt-secured.middlewares=secHeaders@file,def-compress,def-foundryvtt-secured_domainredirect"
-      
       # HTTP
       - "traefik.http.routers.foundryvtt.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt.entrypoints=http"
