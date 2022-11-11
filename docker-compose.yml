@@ -53,7 +53,7 @@ services:
     hostname: traefik_host
     command:
       --api.insecure=true
-      --providers.docker
+      --providers.docker=true
       --providers.docker.exposedbydefault=false
       --entrypoints.http.address=:80
       --entrypoints.https.address=:443
