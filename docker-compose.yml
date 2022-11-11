@@ -62,8 +62,6 @@ services:
       - 80:80 # HTTP
       - 443:443 # HTTPS
       - 8080:8080 # Web UI
-      - 30000:30000 # FoundryVTT Beaver
-      - 30001:30001 # FoundryVTT Kibin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # let Traefik listen for Docker events
       - /data/traefik/acme.json:/acme.json
@@ -81,6 +79,8 @@ services:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD}
+    ports:
+      - 30000:30000
     restart: unless-stopped
 
   # FoundryVTT services for WarHab & Kibin
@@ -95,4 +95,6 @@ services:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_KIBIN}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_KIBIN}
       - FOUNDRY_ADMIN_KEY=${FOUNDRY_ADMIN_PASSWORD_KIBIN}
+    ports:    
+      - 30001:30001
     restart: unless-stopped
