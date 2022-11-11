@@ -90,13 +90,13 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTP
-      # - "traefik.http.routers.foundryvtt-beaver.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
-      - "traefik.http.routers.foundryvtt-beaver.rule=Host(`pragmaticbeaver.eu`)"
+      - "traefik.http.routers.foundryvtt-beaver.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt-beaver.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-beaver.entrypoints=http"
 
       # HTTPS
-      # - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
-      - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`pragmaticbeaver.eu`)"
+      - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`foundry.beaver.pragmaticbeaver.eu`)"
+      # - "traefik.http.routers.foundryvtt-beaver-secure.rule=Host(`pragmaticbeaver.eu`)"
       - "traefik.http.routers.foundryvtt-beaver-secure.entrypoints=https"
       - "traefik.http.routers.foundryvtt-beaver-secure.tls=true"
       - "traefik.http.routers.foundryvtt-beaver-secure.tls.certresolver=letsencrypt"
