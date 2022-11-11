@@ -91,6 +91,6 @@ services:
       - "traefik.http.routers.foundryvtt-secure.rule=Host(`xx.xx.xx`)"
       - "traefik.http.routers.foundryvtt-secure.tls=true"
       - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
-      - "traefik.http.routers.foundryvtt-secure.service=foundry-beaver"
+      - "traefik.http.routers.foundryvtt-secure.service=foundry_beaver"
       - "traefik.docker.network=proxy"
     restart: unless-stopped
