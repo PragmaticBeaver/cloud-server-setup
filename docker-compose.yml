@@ -43,7 +43,6 @@ services:
     restart: unless-stopped
 
   # Traefik
-  # todo configure LetsEncrypt
   traefik:
     image: traefik:v2.9
     container_name: traefik
@@ -55,7 +54,7 @@ services:
       --entrypoints.http.address=:80
       --entrypoints.https.address=:443
       --certificatesresolvers.letsencrypt.acme.httpchallenge=true
-      --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=http
+      --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=https
       --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       --certificatesresolvers.letsencrypt.acme.email=dome.blatzheim@gmx.de
       --certificatesresolvers.letsencrypt.acme.storage=acme.json
