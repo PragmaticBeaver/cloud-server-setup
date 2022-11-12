@@ -85,7 +85,9 @@ services:
     networks:
       - proxy
     volumes:
-      - /home/dome/foundry-vtt-beaver:/data
+      - type: bind
+        source: /home/dome/foundry-vtt-beaver
+        target: /data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME}
@@ -117,8 +119,12 @@ services:
     networks:
       - proxy
     volumes:
-      - /home/kibin/foundry-vtt-warhab:/data
-      # - /home/warhab/foundry-vtt-warhab:/data
+      - type: bind
+        source: /home/kibin/foundry-vtt-warhab
+        target: /data
+      # - type: bind
+      #   source: /home/warhab/foundry-vtt-warhab
+      #   target: /data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD_WARHAB}
       - FOUNDRY_USERNAME=${FOUNDRY_USERNAME_WARHAB}
