@@ -119,7 +119,9 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /data/webdav:/var/lib/dav
+      - type: bind
+        source: /data/webdav
+        target: /var/lib/dav
       - /data/webdav-config/user.passwd:/user.passwd
     labels:
       - "traefik.enable=true"
