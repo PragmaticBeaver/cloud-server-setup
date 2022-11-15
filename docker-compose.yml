@@ -69,7 +69,7 @@ services:
       --certificatesresolvers.letsencrypt.acme.httpchallenge=true
       --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=http
       --certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
-      --certificatesresolvers.letsencrypt.acme.email=dominik.blatzheim@mailbox.org
+      --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
       --certificatesresolvers.letsencrypt.acme.storage=acme.json
     ports:
       - 80:80 # HTTP
