@@ -173,6 +173,8 @@ services:
       - "traefik.http.routers.foundryvtt-beaver-secure.tls=true"
       - "traefik.http.routers.foundryvtt-beaver-secure.tls.certresolver=letsencrypt"
       - "traefik.http.routers.foundryvtt-beaver-secure.service=foundrybeaver"
+
+      # Port
       - "traefik.http.services.foundrybeaver.loadbalancer.server.port=30000" # FoundryVTT Port
 
       # redirect
