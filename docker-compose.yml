@@ -51,13 +51,19 @@ services:
 
   # Traefik
   traefik:
-    image: traefik:v2.9
+    image: traefik:latest
     container_name: traefik
     hostname: traefik_host
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
     command:
       --api.insecure=true
       --providers.docker=true
       --providers.docker.exposedbydefault=false
+      --providers.file.filename="dynamic_conf.yml"
       --entrypoints.http.address=:80
       --entrypoints.https.address=:443
       --certificatesresolvers.letsencrypt.acme.httpchallenge=true
@@ -68,13 +74,33 @@ services:
     ports:
       - 80:80 # HTTP
       - 443:443 # HTTPS
-      - 8080:8080 # Web UI
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # let Traefik listen for Docker events
       - /data/traefik/acme.json:/acme.json
-    restart: unless-stopped
-    networks:
-      - proxy
+      - /data/traefik/dynamic_conf.yml:/dynamic_conf.yml
+    labels:
+      - "traefik.enable=true"
+      # HTTP
+      - "traefik.http.routers.traefik.rule=Host(`traefik.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.traefik.entrypoints=http"
+
+      # HTTPS
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=http"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+
+      # redirect
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+
+      # authentication
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_USERNAME}:${TRAEFIK_PASSWORD}"
+      - "traefik.http.routers.traefik-secure.middlewares=secHeaders@file,traefik-auth"
+
+      # config
+      - "providers.file.filename=/dynamic_conf.yml"
 
   # FoundryVTT services for Beaver
   foundry-beaver:
