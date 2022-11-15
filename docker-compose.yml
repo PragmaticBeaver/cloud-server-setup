@@ -32,8 +32,8 @@ services:
     hostname: minecraftbackup
     environment:
       BACKUP_METHOD: tar
-      BACKUP_INTERVAL: "3h"
-      PRUNE_BACKUPS_DAYS: 7
+      BACKUP_INTERVAL: "6h"
+      PRUNE_BACKUPS_DAYS: 3
       INITIAL_DELAY: 120
       TAR_COMPRESS_METHOD: gzip
       ZSTD_PARAMETERS: "-3 --long=25 --single-thread"
