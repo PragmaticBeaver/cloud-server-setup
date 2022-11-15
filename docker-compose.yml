@@ -193,7 +193,7 @@ services:
       - proxy
     volumes:
       - type: bind
-        source: /data/webdav/foundry-vtt-warhab
+        source: /home/kibin/foundry-vtt-warhab
         target: /data
       # - type: bind
       #   source: /home/warhab/foundry-vtt-warhab
