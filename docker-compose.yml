@@ -101,6 +101,49 @@ services:
 
       # config
       - "providers.file.filename=/dynamic_conf.yml"
+ 
+
+  # WebDAV
+  webdav:
+    image: bytemark/webdav
+    container_name: webdav
+    restart: unless-stopped
+    environment:
+      AUTH_TYPE: Basic
+      SERVER_NAMES: webdav.pragmaticbeaver.eu
+      UID: 1002
+      GID: 1002
+      TZ: Europe/Berlin
+    networks:
+      - proxy
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /data/webdav:/var/lib/dav
+      - /data/webdav-config/user.passwd:/user.passwd
+    labels:
+      - "traefik.enable=true"
+      # HTTP
+      - "traefik.http.routers.webdav.rule=Host(`webdav.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.webdav.entrypoints=http"
+      
+      #- "traefik.http.middlewares.webdav-https-redirect.redirectscheme.scheme=https"
+      #- "traefik.http.routers.webdav.middlewares=webdav-https-redirect"
+
+      # HTTPS
+      - "traefik.http.routers.webdav-secure.rule=Host(`webdav.pragmaticbeaver.eu`)"
+      - "traefik.http.routers.webdav-secure.entrypoints=https"
+      - "traefik.http.routers.webdav-secure.tls=true"
+      - "traefik.http.routers.webdav-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.webdav-secure.service=webdav"
+
+      # Port
+      - "traefik.http.services.webdav.loadbalancer.server.port=80"
+
+      # authentication
+      - "traefik.http.routers.webdav-secure.middlewares=secHeaders@file"
+
+      - "traefik.docker.network=proxy"
 
   # FoundryVTT services for Beaver
   foundry-beaver:
