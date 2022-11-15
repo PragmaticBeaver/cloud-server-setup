@@ -119,7 +119,9 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /data/webdav:/var/lib/dav
+      - type: bind
+        source: /data/webdav
+        target: /var/lib/dav
       - /data/webdav-config/user.passwd:/user.passwd
     labels:
       - "traefik.enable=true"
@@ -155,7 +157,7 @@ services:
       - proxy
     volumes:
       - type: bind
-        source: /home/dome/foundry-vtt-beaver
+        source: /data/webdav/foundry-vtt-beaver
         target: /data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
@@ -191,7 +193,7 @@ services:
       - proxy
     volumes:
       - type: bind
-        source: /home/kibin/foundry-vtt-warhab
+        source: /data/webdav/foundry-vtt-warhab
         target: /data
       # - type: bind
       #   source: /home/warhab/foundry-vtt-warhab
