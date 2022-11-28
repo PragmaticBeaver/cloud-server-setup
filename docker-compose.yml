@@ -102,7 +102,6 @@ services:
       # config
       - "providers.file.filename=/dynamic_conf.yml"
  
-
   # WebDAV
   webdav:
     image: bytemark/webdav
@@ -157,7 +156,7 @@ services:
       - proxy
     volumes:
       - type: bind
-        source: /data/webdav/foundry-vtt-beaver
+        source: /data/webdav/data/foundry-vtt-beaver
         target: /data
     environment:
       - FOUNDRY_PASSWORD=${FOUNDRY_PASSWORD}
