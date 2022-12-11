@@ -218,3 +218,20 @@ services:
       # redirect
       - "traefik.http.routers.foundryvtt-warhab.middlewares=foundryvtt-warhab-https-redirect"
       - "traefik.http.middlewares.foundryvtt-warhab-https-redirect.redirectscheme.scheme=https"
+
+# Valheim Server
+  valheim:
+    image: lloesche/valheim-server
+    container_name: valheim_server
+    ports:
+      - 2456-2457:2456-2457
+    environment:
+      - SERVER_NAME="Tableflipper"
+      - WORLD_NAME="Tableflipper auf Holmgeir"
+      - SERVER_PASS="${VALHEIM_SERVER_PW}"
+    volumes:
+    - /data/valheim-server/config:/config
+    - /data/valheim-server/data:/opt/valheim
+    restart: unless-stopped
+    networks:
+      - proxy
