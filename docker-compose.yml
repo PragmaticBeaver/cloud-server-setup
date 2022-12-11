@@ -33,7 +33,7 @@ services:
     environment:
       BACKUP_METHOD: tar
       BACKUP_INTERVAL: "6h"
-      PRUNE_BACKUPS_DAYS: 3
+      PRUNE_BACKUPS_DAYS: 1
       INITIAL_DELAY: 120
       TAR_COMPRESS_METHOD: gzip
       ZSTD_PARAMETERS: "-3 --long=25 --single-thread"
