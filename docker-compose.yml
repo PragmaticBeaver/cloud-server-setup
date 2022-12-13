@@ -12,6 +12,7 @@ services:
       environment:
         TYPE: "FABRIC"
         MOTD: "Fabric Minecraft Server"
+        VERSION: "1.19.2"
         MEMORY: "4G"
         EULA: "TRUE"
         ENABLE_RCON: "true"
