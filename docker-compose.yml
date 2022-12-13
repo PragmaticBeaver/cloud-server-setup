@@ -230,7 +230,7 @@ services:
       - SERVER_NAME="Tableflipper"
       - WORLD_NAME="Tableflipper auf Holmgeir"
       - SERVER_PASS="${VALHEIM_SERVER_PW}"
-      - SERVER_PUBLIC="true"
+      - SERVER_PUBLIC="false"
     volumes:
     - /data/valheim-server/config:/config
     - /data/valheim-server/data:/opt/valheim
