@@ -225,13 +225,23 @@ services:
     image: lloesche/valheim-server
     container_name: valheim_server
     ports:
-      - 2456-2457:2456-2457
+      - "2456-2457:2456-2457/udp"
+      - "9001:9001/tcp"
     environment:
       - SERVER_NAME="Tableflipper"
       - WORLD_NAME="Tableflipper auf Holmgeir"
       - SERVER_PASS="${VALHEIM_SERVER_PW}"
       - SERVER_PUBLIC="false"
+      - SUPERVISOR_HTTP=true
     volumes:
     - /data/valheim-server/config:/config
     - /data/valheim-server/data:/opt/valheim
     restart: unless-stopped
+    labels:
+      traefik.enable: true
+      traefik.http.routers.valheim.entrypoints: https
+      traefik.http.routers.valheim.rule: Host(`valheim.domain.tld`)
+      traefik.http.routers.valheim.tls: true
+      traefik.http.services.valheim.loadbalancer.server.port: 9001
+    networks:
+        - proxy
