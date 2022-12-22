@@ -3,53 +3,6 @@ networks:
   proxy:
     external: true
 services:
-  # Minecraft Fabric Server
-  # mc-fabric:
-  #     image: itzg/minecraft-server
-  #     container_name: mc_fabric_server
-  #     ports:
-  #       - 25565:25565
-  #     environment:
-  #       TYPE: "FABRIC"
-  #       MOTD: "Fabric Minecraft Server"
-  #       VERSION: "1.19.2"
-  #       MEMORY: "4G"
-  #       EULA: "TRUE"
-  #       ENABLE_RCON: "true"
-  #       RCON_PASSWORD: ${RCON_PASSWORD}
-  #       RCON_PORT: 28016
-  #       restart: always
-  #     volumes:
-  #     - /data/minecraft-fabric:/data
-  #     restart: unless-stopped
-  #     networks:
-  #       - proxy
-
-  # Minecraft Backup Service
-  # mc-backup:
-  #   image: itzg/mc-backup
-  #   container_name: mc_backup
-  #   # This needs to be set because backups use hostnames
-  #   hostname: minecraftbackup
-  #   environment:
-  #     BACKUP_METHOD: tar
-  #     BACKUP_INTERVAL: "6h"
-  #     PRUNE_BACKUPS_DAYS: 1
-  #     INITIAL_DELAY: 120
-  #     TAR_COMPRESS_METHOD: gzip
-  #     ZSTD_PARAMETERS: "-3 --long=25 --single-thread"
-  #     SRC_DIR: "/data/minecraft-fabric/world"
-  #     DEST_DIR: "/data/minecraft-backups"
-  #     BACKUP_NAME: tableflipper-server
-  #     RCON_HOST: mc-fabric # change this to your Minecraft docker service name
-  #     RCON_PASSWORD: ${RCON_PASSWORD}
-  #     RCON_PORT: 28016
-  #   volumes:
-  #     - /data:/data
-  #   restart: unless-stopped
-  #   networks:
-  #     - proxy
-
   # Traefik
   traefik:
     image: traefik:latest
@@ -246,3 +199,50 @@ services:
       traefik.http.services.valheim.loadbalancer.server.port: 9001
     networks:
         - proxy
+
+  # Minecraft Fabric Server
+  # mc-fabric:
+  #     image: itzg/minecraft-server
+  #     container_name: mc_fabric_server
+  #     ports:
+  #       - 25565:25565
+  #     environment:
+  #       TYPE: "FABRIC"
+  #       MOTD: "Fabric Minecraft Server"
+  #       VERSION: "1.19.2"
+  #       MEMORY: "4G"
+  #       EULA: "TRUE"
+  #       ENABLE_RCON: "true"
+  #       RCON_PASSWORD: ${RCON_PASSWORD}
+  #       RCON_PORT: 28016
+  #       restart: always
+  #     volumes:
+  #     - /data/minecraft-fabric:/data
+  #     restart: unless-stopped
+  #     networks:
+  #       - proxy
+
+  # Minecraft Backup Service
+  # mc-backup:
+  #   image: itzg/mc-backup
+  #   container_name: mc_backup
+  #   # This needs to be set because backups use hostnames
+  #   hostname: minecraftbackup
+  #   environment:
+  #     BACKUP_METHOD: tar
+  #     BACKUP_INTERVAL: "6h"
+  #     PRUNE_BACKUPS_DAYS: 1
+  #     INITIAL_DELAY: 120
+  #     TAR_COMPRESS_METHOD: gzip
+  #     ZSTD_PARAMETERS: "-3 --long=25 --single-thread"
+  #     SRC_DIR: "/data/minecraft-fabric/world"
+  #     DEST_DIR: "/data/minecraft-backups"
+  #     BACKUP_NAME: tableflipper-server
+  #     RCON_HOST: mc-fabric # change this to your Minecraft docker service name
+  #     RCON_PASSWORD: ${RCON_PASSWORD}
+  #     RCON_PORT: 28016
+  #   volumes:
+  #     - /data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy
